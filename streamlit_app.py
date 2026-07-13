@@ -28,7 +28,7 @@ btc = yf.download(
 
 btc.columns = btc.columns.droplevel(1)
 btc.reset_index(inplace=True)
-btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'
+btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Volume'
 
 btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
