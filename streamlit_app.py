@@ -58,8 +58,8 @@ with st.expander('Data Visualization'):
     ax.grid(True)
     st.pyplot(fig)
 
-     st.write('**Close Price**')
-     st.area_chart(btc.set_index('Date')['Close'])
+    st.write('**Close Price**')
+    st.area_chart(btc.set_index('Date')['Close'])
 
 
 
