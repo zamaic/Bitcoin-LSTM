@@ -55,8 +55,7 @@ with st.expander('Data Visualization'):
      variables = st.multiselect(
      'Select variables to display',
      'Open', 'High', 'Low', 'Close',
-     default= 'Open', 'High', 'Low', 'Close'
-     )
+     default= 'Open', 'High', 'Low', 'Close')
     
      fig = go.Figure()
      for var in variables:
@@ -64,16 +63,14 @@ with st.expander('Data Visualization'):
      x=btc 'Date',
      y=btcvar,
      mode='lines',
-     name=var
-     ))
+     name=var))
     
      fig.update_layout(
      title='Bitcoin OHLC',
      xaxis_title='Date',
      yaxis_title='Price USD',
      hovermode='x unified',
-     template='plotly_dark' # o 'plotly' si no te gusta oscuro
-     )
+     template='plotly_dark')
      st.plotly_chart(fig, use_container_width=True)
 
      st.write('**Candlestick Chart**')
@@ -84,16 +81,14 @@ with st.expander('Data Visualization'):
      high=btc 'High',
      low=btc 'Low',
      close=btc 'Close',
-     name='BTC'
-     ))
+     name='BTC'))
     
      fig2.update_layout(
      title='BTC Candlestick',
      xaxis_title='Date',
      yaxis_title='Price USD',
      hovermode='x unified',
-     template='plotly_dark'
-     )
+     template='plotly_dark')
     
      st.plotly_chart(fig2, use_container_width=True)
 
