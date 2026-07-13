@@ -54,13 +54,13 @@ with st.expander('Data Visualization'):
     # Selector de qué variables mostrar
      variables = st.multiselect(
      'Select variables to display',
-     'Open', 'High', 'Low', 'Close',
-     default= 'Open', 'High', 'Low', 'Close')
+     ['Open', 'High', 'Low', 'Close'],
+     default=['Open', 'High', 'Low', 'Close'])
     
      fig = go.Figure()
      for var in variables:
      fig.add_trace(go.Scatter(
-     x=btc 'Date',
+     x=btc['Date'],
      y=btcvar,
      mode='lines',
      name=var))
@@ -76,11 +76,11 @@ with st.expander('Data Visualization'):
      st.write('**Candlestick Chart**')
 
      fig2 = go.Figure(data= go.Candlestick(
-     x=btc 'Date',
-     open=btc 'Open',
-     high=btc 'High',
-     low=btc 'Low',
-     close=btc 'Close',
+     x=btc['Date'],
+     open=btc['Open'],
+     high=btc['High'],
+     low=btc['Low'],
+     close=btc['Close'],
      name='BTC'))
     
      fig2.update_layout(
