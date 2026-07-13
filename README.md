@@ -1,13 +1,10 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# LSTM Bitcoin price USD
 
-Description of the app ...
+A deep learning-powered web application that forecasts Bitcoin (BTC/USD) closing prices using a Long Short-Term Memory (LSTM) neural network. Built with Streamlit for an interactive and clean user interface.
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-starter-kit.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://Bitcoin-lstm.streamlit.app/)
 
 ## GitHub Codespaces
 
