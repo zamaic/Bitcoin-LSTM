@@ -57,6 +57,9 @@ with st.expander('Data Visualization'):
     plt.legend(['Open', 'High', 'Low', 'Close'])
     plt.grid(True)
     plt.show()
+    st.pyplot(plt)
+
+
 
 
 
