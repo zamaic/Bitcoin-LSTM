@@ -26,6 +26,6 @@ btc = yf.download(
 )
 
 btc.to_csv('bitcoin_historical_data.csv')
-btc.fillna(method='ffill', inplace=True)
+btc.fillna(inplace=True)
 df = pd.read_csv('bitcoin_historical_data.csv')
 df
