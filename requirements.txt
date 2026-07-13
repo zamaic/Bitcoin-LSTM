@@ -1,11 +1,6 @@
 streamlit
 numpy
 pandas
-math
-pandas_datareader
-datetime
+pandas-datareader
 tensorflow
-sklearn.preprocessing
-keras.models
-keras.layers
-matplotlib.pyplot
+scikit-learn matplotlib
