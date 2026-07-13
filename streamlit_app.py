@@ -32,6 +32,9 @@ btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Volume'
 
 btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
-df = pd.read_csv('bitcoin_historical_data.csv')
-df
+
+with st.expander('Data'):
+    st.write(**Raw Data**)
+    df = pd.read_csv('bitcoin_historical_data.csv')
+    df
 
