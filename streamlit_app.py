@@ -48,3 +48,16 @@ with st.expander('Data'):
     y_display = btc[['Date', 'Close']].tail(60)
     y_display
 
+with st.expander('Data Visualization'):
+    plt.figure(figsize=(16,8))
+    plt.title('Price Bitcoin - OHLC', fontsize=24)
+    plt.plot(btc[['Open','High','Low','Close']])
+    plt.xlabel('Date', fontsize=18)
+    plt.ylabel('Price USD', fontsize=18)
+    plt.legend(['Open', 'High', 'Low', 'Close'])
+    plt.grid(True)
+    plt.show()
+
+
+
+
