@@ -10,6 +10,8 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 import yfinance as yf
+import plotly.graph_objects as go
+
 
 # Introduction
 
@@ -49,6 +51,53 @@ with st.expander('Data'):
     y_display
 
 with st.expander('Data Visualization'):
+    # Selector de qué variables mostrar
+     variables = st.multiselect(
+     'Select variables to display',
+     'Open', 'High', 'Low', 'Close',
+     default= 'Open', 'High', 'Low', 'Close'
+     )
+    
+     fig = go.Figure()
+     for var in variables:
+     fig.add_trace(go.Scatter(
+     x=btc 'Date',
+     y=btcvar,
+     mode='lines',
+     name=var
+     ))
+    
+     fig.update_layout(
+     title='Bitcoin OHLC',
+     xaxis_title='Date',
+     yaxis_title='Price USD',
+     hovermode='x unified',
+     template='plotly_dark' # o 'plotly' si no te gusta oscuro
+     )
+     st.plotly_chart(fig, use_container_width=True)
+
+     st.write('**Candlestick Chart**')
+
+     fig2 = go.Figure(data= go.Candlestick(
+     x=btc 'Date',
+     open=btc 'Open',
+     high=btc 'High',
+     low=btc 'Low',
+     close=btc 'Close',
+     name='BTC'
+     ))
+    
+     fig2.update_layout(
+     title='BTC Candlestick',
+     xaxis_title='Date',
+     yaxis_title='Price USD',
+     hovermode='x unified',
+     template='plotly_dark'
+     )
+    
+     st.plotly_chart(fig2, use_container_width=True)
+
+    '''
     fig, ax = plt.subplots(figsize=(16,8))
     ax.plot(btc[['Open','High','Low','Close']])
     ax.set_title('Price Bitcoin - OHLC', fontsize=24)
@@ -60,6 +109,7 @@ with st.expander('Data Visualization'):
 
     st.write('**Close Price**')
     st.line_chart(btc.set_index('Date')['Close'])
+    '''
 
 
 
