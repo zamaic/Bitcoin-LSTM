@@ -40,11 +40,11 @@ with st.expander('Data'):
 
     st.write('**Features (X)**')
     st.write('Last 60 days (Open, High, Low, Close)')
-    X_display = df[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
+    X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
     X_display
     
     st.write('**Target (y)**')
     st.write('Close price of next day')
-    y_display = df[['Date', 'Close']].tail(60)
+    y_display = btc[['Date', 'Close']].tail(60)
     y_display
 
