@@ -50,16 +50,16 @@ with st.expander('Data'):
 
 with st.expander('Data Visualization'):
     fig, ax = plt.subplots(figsize=(16,8))
-    ax.plot(btc  'Open','High','Low','Close')
+    ax.plot(btc[['Open','High','Low','Close']])
     ax.set_title('Price Bitcoin - OHLC', fontsize=24)
     ax.set_xlabel('Date', fontsize=18)
     ax.set_ylabel('Price USD', fontsize=18)
-    ax.legend( 'Open', 'High', 'Low', 'Close')
+    ax.legend(['Open', 'High', 'Low', 'Close'])
     ax.grid(True)
     st.pyplot(fig)
 
      st.write('**Close Price**')
-     st.area_chart(btc.set_index('Date') 'Close')
+     st.area_chart(btc.set_index('Date')['Close'])
 
 
 
