@@ -92,19 +92,19 @@ with st.expander('Data Visualization'):
     
      st.plotly_chart(fig2, use_container_width=True)
 
-    '''
-    fig, ax = plt.subplots(figsize=(16,8))
-    ax.plot(btc[['Open','High','Low','Close']])
-    ax.set_title('Price Bitcoin - OHLC', fontsize=24)
-    ax.set_xlabel('Date', fontsize=18)
-    ax.set_ylabel('Price USD', fontsize=18)
-    ax.legend(['Open', 'High', 'Low', 'Close'])
-    ax.grid(True)
-    st.pyplot(fig)
+'''
+fig, ax = plt.subplots(figsize=(16,8))
+ax.plot(btc[['Open','High','Low','Close']])
+ax.set_title('Price Bitcoin - OHLC', fontsize=24)
+ax.set_xlabel('Date', fontsize=18)
+ax.set_ylabel('Price USD', fontsize=18)
+ax.legend(['Open', 'High', 'Low', 'Close'])
+ax.grid(True)
+st.pyplot(fig)
 
-    st.write('**Close Price**')
-    st.line_chart(btc.set_index('Date')['Close'])
-    '''
+st.write('**Close Price**')
+st.line_chart(btc.set_index('Date')['Close'])
+'''
 
 
 
