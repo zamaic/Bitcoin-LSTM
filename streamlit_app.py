@@ -10,7 +10,6 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 import yfinance as yf
-import plotly.graph_objects as go
 
 
 # Introduction
