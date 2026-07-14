@@ -59,11 +59,11 @@ with st.expander('Data Visualization'):
     
      fig = go.Figure()
      for var in variables:
-     fig.add_trace(go.Scatter(
-     x=btc['Date'],
-     y=btcvar,
-     mode='lines',
-     name=var))
+         fig.add_trace(go.Scatter(
+         x=btc['Date'],
+         y=btcvar,
+         mode='lines',
+         name=var))
     
      fig.update_layout(
      title='Bitcoin OHLC',
