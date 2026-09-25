@@ -48,7 +48,7 @@ with st.expander('Data'):
     st.write('Last 60 days (Open, High, Low, Close)')
     X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
     X_display
-    
+
     st.write('**Target (y)**')
     st.write('Close price of next day')
     y_display = btc[['Date', 'Close']].tail(60)
@@ -63,12 +63,6 @@ with st.expander('Data Visualization'):
     ax.legend(['Open', 'High', 'Low', 'Close'])
     ax.grid(True)
     st.pyplot(fig)
-    
+
     st.write('**Close Price**')
     st.line_chart(btc.set_index('Date')['Close'])
-
-
-
-
-
-
