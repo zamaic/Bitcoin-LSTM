@@ -18,51 +18,104 @@ st.title('BTC Price Forecasting with LSTM')
 st.write('Made by Samara Acosta')
 st.info('This app builds a Long-Short Term Mmeory RNN for BTC price forecasting!')
 
+
 # Create CSV with historical data
 
-end_date =  datetime.today().strftime('%Y-%m-%d')
+end_date = datetime.today().strftime('%Y-%m-%d')
+
 btc = yf.download(
     "BTC-USD",
     start="2021-06-10",
-    end = end_date
+    end=end_date,
+    auto_adjust=False
 )
 
-# Ajustar columnas de yfinance
+# Fix yfinance MultiIndex columns
 if isinstance(btc.columns, pd.MultiIndex):
     btc.columns = btc.columns.get_level_values(0)
 
 btc.reset_index(inplace=True)
 
-# Dejar únicamente las columnas que necesitamos
+# Rename first column as Date
+btc.rename(columns={btc.columns[0]: 'Date'}, inplace=True)
+
+# Keep only required columns
 btc = btc[['Date', 'Open', 'High', 'Low', 'Close']]
 
 btc.ffill(inplace=True)
+
 btc.to_csv("bitcoin_historical_data.csv", index=False)
 
+
+# Data
+
 with st.expander('Data'):
+
     st.write('**Raw Data**')
+
     df = pd.read_csv('bitcoin_historical_data.csv')
-    df
+    st.dataframe(df)
+
 
     st.write('**Features (X)**')
     st.write('Last 60 days (Open, High, Low, Close)')
-    X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
-    X_display
+
+    X_display = btc[
+        ['Date', 'Open', 'High', 'Low', 'Close']
+    ].tail(60)
+
+    st.dataframe(X_display)
+
 
     st.write('**Target (y)**')
     st.write('Close price of next day')
-    y_display = btc[['Date', 'Close']].tail(60)
-    y_display
+
+    y_display = btc[
+        ['Date', 'Close']
+    ].tail(60)
+
+    st.dataframe(y_display)
+
+
+# Data Visualization
 
 with st.expander('Data Visualization'):
-    fig, ax = plt.subplots(figsize=(16,8))
-    ax.plot(btc[['Open','High','Low','Close']])
-    ax.set_title('Price Bitcoin - OHLC', fontsize=24)
-    ax.set_xlabel('Date', fontsize=18)
-    ax.set_ylabel('Price USD', fontsize=18)
-    ax.legend(['Open', 'High', 'Low', 'Close'])
+
+    fig, ax = plt.subplots(figsize=(16, 8))
+
+    ax.plot(
+        btc[['Open', 'High', 'Low', 'Close']]
+    )
+
+    ax.set_title(
+        'Price Bitcoin - OHLC',
+        fontsize=24
+    )
+
+    ax.set_xlabel(
+        'Date',
+        fontsize=18
+    )
+
+    ax.set_ylabel(
+        'Price USD',
+        fontsize=18
+    )
+
+    ax.legend([
+        'Open',
+        'High',
+        'Low',
+        'Close'
+    ])
+
     ax.grid(True)
+
     st.pyplot(fig)
 
+
     st.write('**Close Price**')
-    st.line_chart(btc.set_index('Date')['Close'])
+
+    st.line_chart(
+        btc.set_index('Date')['Close']
+    )
