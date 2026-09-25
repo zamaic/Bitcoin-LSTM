@@ -34,9 +34,9 @@ btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
 
 with st.expander('Data'):
-st.write('**Raw Data**')
-df = pd.read_csv('bitcoin_historical_data.csv')
-df
+    st.write('**Raw Data**')
+    df = pd.read_csv('bitcoin_historical_data.csv')
+    df
 
     st.write('**Features (X)**')
     st.write('Last 60 days (Open, High, Low, Close)')
