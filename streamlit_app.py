@@ -34,7 +34,7 @@ if isinstance(btc.columns, pd.MultiIndex):
 btc.reset_index(inplace=True)
 
 # Dejar únicamente las columnas que necesitamos
-btc = btc[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
+btc = btc[['Date', 'Open', 'High', 'Low', 'Close']]
 
 btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
