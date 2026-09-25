@@ -27,9 +27,14 @@ btc = yf.download(
     end = end_date
 )
 
-btc.columns = btc.columns.droplevel(1)
+# Ajustar columnas de yfinance
+if isinstance(btc.columns, pd.MultiIndex):
+    btc.columns = btc.columns.get_level_values(0)
+
 btc.reset_index(inplace=True)
-btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Volume'
+
+# Dejar únicamente las columnas que necesitamos
+btc = btc[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
 
 btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
