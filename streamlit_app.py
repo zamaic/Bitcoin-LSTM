@@ -40,7 +40,7 @@ btc.reset_index(inplace=True)
 btc.rename(columns={btc.columns[0]: 'Date'}, inplace=True)
 
 # Keep only required columns
-btc = btc[['Date', 'Open', 'High', 'Low', 'Close']]
+btc = btc[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
 
 btc.ffill(inplace=True)
 
