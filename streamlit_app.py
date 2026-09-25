@@ -24,40 +24,103 @@ end_date = datetime.today().strftime('%Y-%m-%d')
 btc = yf.download(
     "BTC-USD",
     start="2021-06-10",
-    end=end_date
+    end=end_date,
+    auto_adjust=False
 )
 
-btc.columns = btc.columns.droplevel(1)
+# Fix yfinance columns
+if isinstance(btc.columns, pd.MultiIndex):
+    btc.columns = btc.columns.get_level_values(0)
+
 btc.reset_index(inplace=True)
-btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Volume'
+
+# Rename columns
+btc.columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
 
 btc.ffill(inplace=True)
+
+# Save data
 btc.to_csv("bitcoin_historical_data.csv", index=False)
 
-with st.expander('Data'):
+
+# Data
+
+with st.expander('Data', expanded=True):
+
     st.write('**Raw Data**')
+
     df = pd.read_csv('bitcoin_historical_data.csv')
-    st.dataframe(df)
+
+    st.dataframe(
+        df,
+        use_container_width=True
+    )
 
     st.write('**Features (X)**')
-    st.write('Last 60 days (Open, High, Low, Close)')
-    X_display = df[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
-    st.dataframe(X_display)
-    
-    st.write('**Target (y)**')
-    st.write('Close price of next day')
-    y_display = df[['Date', 'Close']].tail(60)
-    st.dataframe(y_display)
 
-with st.expander('Data Visualization'):
-    fig, ax = plt.subplots(figsize=(16,8))
-    ax.plot(btc[['Open','High','Low','Close']])
-    ax.set_title('Price Bitcoin - OHLC', fontsize=24)
-    ax.set_xlabel('Date', fontsize=18)
-    ax.set_ylabel('Price USD', fontsize=18)
-    ax.legend(['Open', 'High', 'Low', 'Close'])
+    st.write('Last 60 days (Open, High, Low, Close)')
+
+    X_display = df[
+        ['Date', 'Open', 'High', 'Low', 'Close']
+    ].tail(60)
+
+    st.dataframe(
+        X_display,
+        use_container_width=True
+    )
+
+    st.write('**Target (y)**')
+
+    st.write('Close price of next day')
+
+    y_display = df[
+        ['Date', 'Close']
+    ].tail(60)
+
+    st.dataframe(
+        y_display,
+        use_container_width=True
+    )
+
+
+# Data Visualization
+
+with st.expander('Data Visualization', expanded=True):
+
+    fig, ax = plt.subplots(figsize=(16, 8))
+
+    ax.plot(
+        btc[['Open', 'High', 'Low', 'Close']]
+    )
+
+    ax.set_title(
+        'Price Bitcoin - OHLC',
+        fontsize=24
+    )
+
+    ax.set_xlabel(
+        'Date',
+        fontsize=18
+    )
+
+    ax.set_ylabel(
+        'Price USD',
+        fontsize=18
+    )
+
+    ax.legend([
+        'Open',
+        'High',
+        'Low',
+        'Close'
+    ])
+
     ax.grid(True)
+
     st.pyplot(fig)
-    
+
     st.write('**Close Price**')
-    st.line_chart(btc.set_index('Date')['Close'])
+
+    st.line_chart(
+        btc.set_index('Date')['Close']
+    )
