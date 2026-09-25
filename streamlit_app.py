@@ -27,20 +27,11 @@ btc = yf.download(
     "BTC-USD",
     start="2021-06-10",
     end=end_date,
-    auto_adjust=False
+    auto_adjust=False,
+    multi_level_index=False
 )
 
-# Fix yfinance MultiIndex columns
-if isinstance(btc.columns, pd.MultiIndex):
-    btc.columns = btc.columns.get_level_values(0)
-
 btc.reset_index(inplace=True)
-
-# Rename first column as Date
-btc.rename(columns={btc.columns[0]: 'Date'}, inplace=True)
-
-# Keep only required columns
-btc = btc[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
 
 btc.ffill(inplace=True)
 
@@ -49,37 +40,49 @@ btc.to_csv("bitcoin_historical_data.csv", index=False)
 
 # Data
 
-with st.expander('Data'):
+with st.expander('Data', expanded=True):
 
     st.write('**Raw Data**')
 
     df = pd.read_csv('bitcoin_historical_data.csv')
-    st.dataframe(df)
+
+    st.dataframe(
+        df,
+        use_container_width=True
+    )
 
 
     st.write('**Features (X)**')
+
     st.write('Last 60 days (Open, High, Low, Close)')
 
     X_display = btc[
         ['Date', 'Open', 'High', 'Low', 'Close']
     ].tail(60)
 
-    st.dataframe(X_display)
+    st.dataframe(
+        X_display,
+        use_container_width=True
+    )
 
 
     st.write('**Target (y)**')
+
     st.write('Close price of next day')
 
     y_display = btc[
         ['Date', 'Close']
     ].tail(60)
 
-    st.dataframe(y_display)
+    st.dataframe(
+        y_display,
+        use_container_width=True
+    )
 
 
 # Data Visualization
 
-with st.expander('Data Visualization'):
+with st.expander('Data Visualization', expanded=True):
 
     fig, ax = plt.subplots(figsize=(16, 8))
 
