@@ -11,6 +11,7 @@ from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 import yfinance as yf
 
+
 # Introduction
 
 st.title('BTC Price Forecasting with LSTM')
@@ -34,35 +35,35 @@ btc.ffill(inplace=True)
 btc.to_csv("bitcoin_historical_data.csv", index=False)
 
 with st.expander('Data'):
-    st.write('**Raw Data**')
-    df = pd.read_csv('bitcoin_historical_data.csv')
-    df
-    
-    st.write('**Features (X)**')
-    st.write('Last 60 days (Open, High, Low, Close)')
-    X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
-    X_display
-    
-    st.write('**Target (y)**')
-    st.write('Close price of next day')
-    y_display = btc[['Date', 'Close']].tail(60)
-    y_display
+st.write('**Raw Data**')
+df = pd.read_csv('bitcoin_historical_data.csv')
+df
+
+st.write('**Features (X)**')
+st.write('Last 60 days (Open, High, Low, Close)')
+X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
+X_display
+
+st.write('**Target (y)**')
+st.write('Close price of next day')
+y_display = btc[['Date', 'Close']].tail(60)
+y_display
 
 with st.expander('Data Visualization'):
-    fig, ax = plt.subplots(figsize=(16,8))
-    ax.plot(btc[['Open','High','Low','Close']])
-    ax.set_title('Price Bitcoin - OHLC', fontsize=24)
-    ax.set_xlabel('Date', fontsize=18)
-    ax.set_ylabel('Price USD', fontsize=18)
-    ax.legend(['Open', 'High', 'Low', 'Close'])
-    ax.grid(True)
-    st.pyplot(fig)
-    
-    st.write('**Close Price**')
-    st.line_chart(btc.set_index('Date')['Close'])
+fig, ax = plt.subplots(figsize=(16,8))
+ax.plot(btc[['Open','High','Low','Close']])
+ax.set_title('Price Bitcoin - OHLC', fontsize=24)
+ax.set_xlabel('Date', fontsize=18)
+ax.set_ylabel('Price USD', fontsize=18)
+ax.legend(['Open', 'High', 'Low', 'Close'])
+ax.grid(True)
+st.pyplot(fig)
+
+st.write('**Close Price**')
+st.line_chart(btc.set_index('Date')['Close'])
 
 
 
 
 
-
+~
