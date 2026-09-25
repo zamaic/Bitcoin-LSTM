@@ -63,7 +63,3 @@ with st.expander('Data Visualization'):
   st.line_chart(btc.set_index('Date')['Close'])
 
 
-
-
-
-~
