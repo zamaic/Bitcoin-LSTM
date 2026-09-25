@@ -10,6 +10,7 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 import yfinance as yf
+import plotly.graph_objects as go
 
 
 # Introduction
@@ -18,107 +19,108 @@ st.title('BTC Price Forecasting with LSTM')
 st.write('Made by Samara Acosta')
 st.info('This app builds a Long-Short Term Mmeory RNN for BTC price forecasting!')
 
-
 # Create CSV with historical data
 
-end_date = datetime.today().strftime('%Y-%m-%d')
-
+end_date =  datetime.today().strftime('%Y-%m-%d')
 btc = yf.download(
-    "BTC-USD",
-    start="2021-06-10",
-    end=end_date,
-    auto_adjust=False,
-    multi_level_index=False
+"BTC-USD",
+start="2021-06-10",
+end = end_date
 )
 
+btc.columns = btc.columns.droplevel(1)
 btc.reset_index(inplace=True)
+btc.columns = 'Date', 'Open', 'High', 'Low', 'Close', 'Volume'
 
 btc.ffill(inplace=True)
-
 btc.to_csv("bitcoin_historical_data.csv", index=False)
 
+with st.expander('Data'):
+st.write('**Raw Data**')
+df = pd.read_csv('bitcoin_historical_data.csv')
+df
 
-# Data
+st.write('**Features (X)**')
+st.write('Last 60 days (Open, High, Low, Close)')
+X_display = btc[['Date', 'Open', 'High', 'Low', 'Close']].tail(60)
+X_display
 
-with st.expander('Data', expanded=True):
+st.write('**Target (y)**')
+st.write('Close price of next day')
+y_display = btc[['Date', 'Close']].tail(60)
+y_display
 
-    st.write('**Raw Data**')
+with st.expander('Data Visualization'):
+# Selector de qué variables mostrar
+variables = st.multiselect(
+'Select variables to display',
+['Open', 'High', 'Low', 'Close'],
+default=['Open', 'High', 'Low', 'Close'])
 
-    df = pd.read_csv('bitcoin_historical_data.csv')
+fig = go.Figure()
+for var in variables:
+fig.add_trace(go.Scatter(
+x=btc['Date'],
+y=btcvar,
+mode='lines',
+name=var))
 
-    st.dataframe(
-        df,
-        use_container_width=True
-    )
+fig.update_layout(
+title='Bitcoin OHLC',
+xaxis_title='Date',
+yaxis_title='Price USD',
+hovermode='x unified',
+template='plotly_dark')
+st.plotly_chart(fig, use_container_width=True)
 
+st.write('**Candlestick Chart**')
 
-    st.write('**Features (X)**')
+fig2 = go.Figure(data= go.Candlestick(
+x=btc['Date'],
+open=btc['Open'],
+high=btc['High'],
+low=btc['Low'],
+close=btc['Close'],
+name='BTC'))
 
-    st.write('Last 60 days (Open, High, Low, Close)')
+fig2.update_layout(
+title='BTC Candlestick',
+xaxis_title='Date',
+yaxis_title='Price USD',
+hovermode='x unified',
+template='plotly_dark')
 
-    X_display = btc[
-        ['Date', 'Open', 'High', 'Low', 'Close']
-    ].tail(60)
+st.plotly_chart(fig2, use_container_width=True)
 
-    st.dataframe(
-        X_display,
-        use_container_width=True
-    )
-
-
-    st.write('**Target (y)**')
-
-    st.write('Close price of next day')
-
-    y_display = btc[
-        ['Date', 'Close']
-    ].tail(60)
-
-    st.dataframe(
-        y_display,
-        use_container_width=True
-    )
-
-
-# Data Visualization
-
-with st.expander('Data Visualization', expanded=True):
-
-    fig, ax = plt.subplots(figsize=(16, 8))
-
-    ax.plot(
-        btc[['Open', 'High', 'Low', 'Close']]
-    )
-
-    ax.set_title(
-        'Price Bitcoin - OHLC',
-        fontsize=24
-    )
-
-    ax.set_xlabel(
-        'Date',
-        fontsize=18
-    )
-
-    ax.set_ylabel(
-        'Price USD',
-        fontsize=18
-    )
-
-    ax.legend([
-        'Open',
-        'High',
-        'Low',
-        'Close'
-    ])
-
+    '''
+    fig, ax = plt.subplots(figsize=(16,8))
+    ax.plot(btc[['Open','High','Low','Close']])
+    ax.set_title('Price Bitcoin - OHLC', fontsize=24)
+    ax.set_xlabel('Date', fontsize=18)
+    ax.set_ylabel('Price USD', fontsize=18)
+    ax.legend(['Open', 'High', 'Low', 'Close'])
     ax.grid(True)
-
     st.pyplot(fig)
 
-
     st.write('**Close Price**')
+    st.line_chart(btc.set_index('Date')['Close'])
+    '''
+'''
+fig, ax = plt.subplots(figsize=(16,8))
+ax.plot(btc[['Open','High','Low','Close']])
+ax.set_title('Price Bitcoin - OHLC', fontsize=24)
+ax.set_xlabel('Date', fontsize=18)
+ax.set_ylabel('Price USD', fontsize=18)
+ax.legend(['Open', 'High', 'Low', 'Close'])
+ax.grid(True)
+st.pyplot(fig)
 
-    st.line_chart(
-        btc.set_index('Date')['Close']
-    )
+st.write('**Close Price**')
+st.line_chart(btc.set_index('Date')['Close'])
+'''
+
+
+
+
+
+~
